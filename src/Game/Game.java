@@ -8,9 +8,13 @@ public class Game {
     private String movieName;
     private String hiddenName;          //underscored movieName
     private boolean isHidden;
+    private String wrongGuess;
+    private int wrongGuessCount;
 
     public Game(String movieName) {
         this.movieName = movieName;
+        wrongGuessCount = 0;
+        wrongGuess = "";
         isHidden = true;
         gameStart();
 
@@ -19,7 +23,7 @@ public class Game {
 
     void gameStart() {
         int movieNameLength = movieName.length();
-
+        wrongGuess = "";
         hiddenName = "";
 
         for (int i = 0; i < movieNameLength; i++) {                         // creating hiddenName (underscored)
@@ -35,6 +39,7 @@ public class Game {
 
         if (hiddenName.equalsIgnoreCase(movieName)) {
         System.out.println("You win");
+        System.out.println("You have guessed '" + movieName + "' correctly");
         }
     }
 
@@ -45,22 +50,31 @@ public class Game {
 
         char letter = scanner.next().charAt(0);             //letter - char input by user
 
-        int index = 0;
 
-        while (movieName.indexOf(letter,index) >= 0) {     //checking each occurrence of letter
-            index = movieName.indexOf(letter,index);
-            if (index>=0) {
-                hiddenName = hiddenName.substring(0,index) + letter + hiddenName.substring(index+1,hiddenName.length());
+        int index = 0;
+        if (movieName.indexOf(letter)>=0) {
+            while (movieName.indexOf(letter, index) >= 0) {     //checking each occurrence of letter
+                index = movieName.indexOf(letter, index);
+                if (index >= 0) {
+                    hiddenName = hiddenName.substring(0, index) + letter + hiddenName.substring(index + 1, hiddenName.length());
+                }
+                index++;
             }
-            index++;
+        } else if (wrongGuess.indexOf(letter) < 0) {
+            wrongGuess = wrongGuess + " " +letter;
+            wrongGuessCount ++;
         }
-        System.out.println(hiddenName);
+
+        System.out.println("You are guessing:" + hiddenName);
+        System.out.println("You have guessed (" + wrongGuessCount + ") wrong letters:" + wrongGuess);
 
         if (hiddenName.indexOf('_') <0){
             isHidden = false;
         }
 
     }
+
+
 
 }
 
