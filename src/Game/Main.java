@@ -28,7 +28,7 @@ public class Main {
 
         int randomNumber = (int) (Math.random()*lineCount);             // random number from 0 to (lineCount)
 
-        String randomMovie =  arrayMovie[1];
+        String randomMovie =  arrayMovie[0];
         System.out.println(randomNumber);
         System.out.println(randomMovie);
 
