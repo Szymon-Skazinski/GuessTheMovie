@@ -46,32 +46,34 @@ public class Game {
     void letterReveal() {
         System.out.print("Guess a letter: ");
         Scanner scanner = new Scanner(System.in);
-
-        char letter = scanner.next().charAt(0);             //letter - char input by user
+        boolean isCharCorrect = false;
+        char character = scanner.next().charAt(0);                                               //character - char inputed by user
+        if ((character >= 'A' && character <='Z') || (character >= 'a' && character <= 'z')) {   //checking if character variable is a letter
+            isCharCorrect = true;
+        } else System.out.println("Invalid symbol. Input the letter.");
 
 
         int index = 0;
-        if (movieName.indexOf(letter)>=0) {
-            while (movieName.indexOf(letter, index) >= 0) {     //checking each occurrence of correct letter
-                index = movieName.indexOf(letter, index);
+        if (movieName.indexOf(character)>=0 && isCharCorrect) {
+            while (movieName.indexOf(character, index) >= 0) {     //checking each occurrence of correct letter
+                index = movieName.indexOf(character, index);
                 if (index >= 0) {
-                    hiddenName = hiddenName.substring(0, index) + letter + hiddenName.substring(index + 1, hiddenName.length());
+                    hiddenName = hiddenName.substring(0, index) + character + hiddenName.substring(index + 1, hiddenName.length());
                 }
                 index++;
             }
-        } else if (wrongGuess.indexOf(letter) < 0) {        //checking if wrong letter exist in wrongGuess
-            wrongGuess = wrongGuess + " " +letter;
+        } else if (wrongGuess.indexOf(character) < 0 && isCharCorrect) {        //checking if wrong letter exist in wrongGuess
+            wrongGuess = wrongGuess + " " +character;
             wrongGuessCount ++;
             point --;
-        }
+        } else  System.out.println("You have already tried with this letter. Try another.");
 
-        System.out.println("You are guessing:" + hiddenName);
+        if (isCharCorrect) {
+            System.out.println("You are guessing:" + hiddenName); }
         System.out.println("You have guessed (" + wrongGuessCount + ") wrong letters:" + wrongGuess);
 
 
     }
-
-
 
 }
 
